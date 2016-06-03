@@ -1,3 +1,7 @@
 http://stackoverflow.com/questions/1437405/how-to-press-the-windows-button-programmatically-using-c-sharp-sendkeys
 
 http://stackoverflow.com/questions/44980/how-can-i-programmatically-determine-if-my-workstation-is-locked
+
+http://stackoverflow.com/questions/12293286/how-to-get-windows-unlock-event-in-c-sharp-windows-application
+
+http://stackoverflow.com/questions/12535722/what-is-the-best-way-to-implement-a-timer
