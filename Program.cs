@@ -20,8 +20,11 @@ namespace LockForMe
 
             Console.WriteLine("The Session Switch is being monitored now.");
             Console.WriteLine(" - To close, type CLOSE and hit Return.");
-            Console.WriteLine(" - To change the Idle time, type TIME 60, when 60 is the seconds to lock the       session for you.");
+            Console.WriteLine(" - To change the Idle time, type TIME 60, when 60 is the seconds to lock the       session for you, the default is 120 seconds.");
             Console.WriteLine(" - The first param is the TIME, so call LockForMe 15 for a 15 sec idle.");
+
+            if (args.Length > 0)
+                _session.CheckCommand("TIME " + args[0]);
 
             var cmd = "";
             while (cmd != null && !cmd.ToUpper().Equals("CLOSE"))
