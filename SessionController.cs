@@ -14,6 +14,8 @@ namespace LockForMe
 {
     public class SessionController
     {
+        const int SW_HIDE = 0;
+        const int SW_SHOW = 5;
         // time of system idle
         private int _idleInterval;
         // function to log/display all messages
@@ -21,7 +23,7 @@ namespace LockForMe
         // Timer used for check last user input
         private Timer _timer;
 
-        public SessionController(Func<string, bool> logFunc )
+        public SessionController(Func<string, bool> logFunc)
         {
             IdleInterval = 120;
             _doLog = logFunc;
@@ -42,7 +44,8 @@ namespace LockForMe
             _timer.Enabled = false;
         }
 
-        public int IdleInterval {
+        public int IdleInterval
+        {
             get
             {
                 return _idleInterval;
@@ -55,7 +58,7 @@ namespace LockForMe
                     _idleInterval = 3600;
                 else
                     _idleInterval = value;
-            } 
+            }
         }
 
         private static void LockSession()
@@ -97,6 +100,12 @@ namespace LockForMe
         [DllImport("user32.dll")]
         static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
 
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         public static double GetSystemIdleTime()
         {
             uint idleTime = 0;
@@ -126,18 +135,27 @@ namespace LockForMe
                 SetIdleTime(lCmd);
             else if (lCmd.Equals("LAST"))
                 DoLog(GetSystemIdleTime().ToString(CultureInfo.CurrentCulture));
+            else if (lCmd.Equals("SHOW"))
+                ShowWindowTaskBar(true);
+            else if (lCmd.Equals("HIDE"))
+                ShowWindowTaskBar(false);
         }
 
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            //DoLog(GetSystemIdleTime().ToString(CultureInfo.CurrentCulture));
-
             if (GetSystemIdleTime() >= IdleInterval)
             {
                 DoLog(" ");
                 DoLog("Your session is locked due to inactivity.");
                 LockSession();
             }
+        }
+
+        public void ShowWindowTaskBar(bool value)
+        {
+            var handle = GetConsoleWindow();
+            DoLog("Hide from taskbar: " + (value ? "Off" : "On"));
+            ShowWindow(handle, value ? SW_SHOW : SW_HIDE);
         }
     }
 }

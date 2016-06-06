@@ -5,3 +5,5 @@ http://stackoverflow.com/questions/44980/how-can-i-programmatically-determine-if
 http://stackoverflow.com/questions/12293286/how-to-get-windows-unlock-event-in-c-sharp-windows-application
 
 http://stackoverflow.com/questions/12535722/what-is-the-best-way-to-implement-a-timer
+
+http://stackoverflow.com/questions/3571627/show-hide-the-console-window-of-a-c-sharp-console-application/3571628#3571628
